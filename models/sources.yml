@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: ikondenko
+    database: econ250-2025
+    schema: ikondenko
+    tables:
+      - name: sheet_external
+      - name: assignment1_full

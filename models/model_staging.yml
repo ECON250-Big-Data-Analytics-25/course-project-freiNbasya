@@ -5,6 +5,8 @@ models:
   - name: week5_transactions_deduplicated_view
     description: "Clean transaction data"
     columns:
+      - name: visitId
+        description: '{{ doc("visitid_description") }}'
       - name: transaction.transactionId
         data_tests:
         - not_null

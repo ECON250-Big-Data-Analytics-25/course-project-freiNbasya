@@ -1,0 +1,15 @@
+
+version: 2
+
+models:
+  - name: int_assignment3_uk_wiki
+  - name: fct_assignment3_top200
+  - name: stg_assignment3_uk_wiki
+    description: "model for 2.1 task"
+    columns:
+      - name: src
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["mobile", "desktop"]
+

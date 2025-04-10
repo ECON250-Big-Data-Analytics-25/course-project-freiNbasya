@@ -112,3 +112,37 @@ If everything is set up well, you will see similar output:
 
 If you have any troubles with installation, please contact the course instructor (Oleh Omelchenko) in slack for assist.
 
+## Explanation of part 4
+
+So, I decided to use partition by order_purchase_timestamp because such partition is good for time-based analytics which are common in such datasets. I decided to cluster by customer_id because several rows might have same or similar ids so it makes easier for BigQuery to scan data.
+
+## Final Project Overview
+
+So this is my project where I'm analyzing brazilian e-commerce dataset.
+
+As initial data, I have 7 source datasets:
+- fp_customers - This dataset has information about the customer and its location. Use it to identify unique customers in the orders dataset and to find the orders delivery location.
+- fp_orders_items - This dataset includes data about the items purchased within each order.
+- fp_order_payments - This dataset includes data about the orders payment options.
+- fp_orders - This is the core dataset. From each order you might find all other information.
+- fp_products - This dataset includes data about the products sold by Olist.
+- fp_sellers - This dataset includes data about the sellers that fulfilled orders made at Olist. Use it to find the seller location and to identify which seller fulfilled each product.
+- fp_product_category_name_translation - Translates the product_category_name to english.
+
+Next we have 7 staged models, most of them have additional derived columns:
+- fp_stg_customers - Staging model for fp_customers; no derived columns
+- fp_stg_order_items - Staging model for fp_order_items; Derived column: sum of price and shipping pric (freight_value)
+- fp_stg_order_payments - Staging model for fp_order_payments; Derived column checks whether payment was made by credit card, which is the most popular payment method
+- fp_stg_orders - Staging model for fp_orders; Derived column shows how long it takes from order being approved to being delivered to customer
+- fp_stg_product_category_name_translation - Staging model for fp_product_category_name_translation; Derived column shows whether original and localized names are the same
+- fp_stg_products - Staging model for fp_products; Derived column shows the volume of the product
+- fp_stg_sellers - Staging model for fp_sellers, no derived columns
+
+Next we have fp_sales full dataset which includes all of information about orders within one dataset
+
+And the last type of models are Mart models. I decided to perform such analysis: order performance, payment analysis and product performance. They are located at respective files:
+- fp_fct_order_performance_analysis - Monthly order performance analysis
+- fp_fct_payment_analysis - Payment method trends, installment patterns and regional preferences analysis
+- fp_fct_product_perfomance - Analysis of top performing product categories by region, price, or time period'
+
+More detailed documentation is available with dbt docs serve

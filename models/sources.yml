@@ -49,3 +49,4 @@ sources:
         columns:
           - name: visitId
             description: '{{ doc("visitid_description") }}'
+      - name: assignment5_input
